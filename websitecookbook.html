@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ingredient Map — A reference for building websites with AI</title>
+<meta name="description" content="A reference for what goes into a website — and what AI tends to leave out. Built for non-experts using AI to create digital things.">
+<meta property="og:title" content="The Ingredient Map">
+<meta property="og:description" content="A reference for what goes into a website — and what AI tends to leave out.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F2EBE0">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F2EBE0'/%3E%3Ctext x='50' y='75' font-family='Georgia,serif' font-size='80' font-style='italic' text-anchor='middle' fill='%23A33B25'%3Ei%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F2EBE0;
+    --paper: #EDE4D6;
+    --ink: #1F1A17;
+    --ink-muted: #5C534B;
+    --accent: #A33B25;
+    --rule: #C9BDA9;
+    --serif-display: 'Fraunces', Georgia, serif;
+    --serif-body: 'Newsreader', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(163, 59, 37, 0.03) 0%, transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(31, 26, 23, 0.025) 0%, transparent 45%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  ::selection { background: var(--accent); color: var(--cream); }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* Reading progress */
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.1s linear;
+    z-index: 100;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 110px 0 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 36px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .kicker::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--serif-display);
+    font-weight: 300;
+    font-size: clamp(54px, 9vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: clamp(20px, 2.6vw, 26px);
+    line-height: 1.4;
+    color: var(--ink-muted);
+    max-width: 560px;
+    font-weight: 300;
+  }
+
+  /* INTRO */
+  .intro {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .intro p {
+    font-size: 19px;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .intro p:first-of-type::first-letter {
+    font-family: var(--serif-display);
+    font-size: 5.2em;
+    float: left;
+    line-height: 0.85;
+    margin: 6px 14px -6px -2px;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .meta-note {
+    margin-top: 44px;
+    padding: 28px 32px;
+    background: var(--paper);
+    border-left: 2px solid var(--accent);
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+
+  .meta-note strong {
+    color: var(--ink);
+    font-weight: 500;
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: 17px;
+  }
+
+  /* CATEGORIES */
+  .categories {
+    padding: 80px 0 40px;
+  }
+
+  .category {
+    margin-bottom: 72px;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .category-number {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+    padding-top: 6px;
+  }
+
+  .category-name {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 4.2vw, 40px);
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+  }
+
+  .category-description {
+    font-family: var(--serif-display);
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 18px;
+    margin-bottom: 28px;
+    max-width: 540px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .ingredients {
+    list-style: none;
+  }
+
+  .ingredient {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgba(201, 189, 169, 0.45);
+    cursor: pointer;
+    transition: padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+  }
+
+  .ingredient:hover {
+    padding-left: 12px;
+  }
+
+  .ingredient:last-child {
+    border-bottom: none;
+  }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--ink-muted);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 5px;
+    position: relative;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .ingredient:hover .checkbox {
+    border-color: var(--accent);
+  }
+
+  .ingredient.checked .checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .ingredient.checked .checkbox::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    width: 5px;
+    height: 11px;
+    border: solid var(--cream);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .ingredient-text {
+    flex: 1;
+    transition: color 0.25s ease, opacity 0.25s ease;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .ingredient.checked .ingredient-text {
+    color: var(--ink-muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    opacity: 0.55;
+  }
+
+  /* CLOSING */
+  .closing {
+    padding: 70px 0 60px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .closing-quote {
+    font-family: var(--serif-display);
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.4;
+    color: var(--ink);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .closing-quote::before {
+    content: '"';
+    position: absolute;
+    left: -8px;
+    top: -8px;
+    font-size: 60px;
+    color: var(--accent);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .closing-followup {
+    margin-top: 28px;
+    padding-left: 32px;
+    font-size: 17px;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* COLOPHON */
+  .colophon {
+    padding: 36px 0 60px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+
+  .colophon-inner {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .colophon-inner span:last-child {
+    color: var(--accent);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 70px 0 60px; }
+    .intro, .categories { padding: 56px 0; }
+    .meta-note { padding: 22px; }
+    .category-header {
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .category-number { padding-top: 0; }
+    .closing-quote, .closing-followup { padding-left: 24px; }
+    body { font-size: 17px; }
+    .ingredient-text { font-size: 16px; }
+  }
+
+  /* Focus styles for keyboard users (accessibility ingredient!) */
+  .ingredient:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="container">
+    <div class="kicker">A reference, not a checklist</div>
+    <h1>The <em>Ingredient</em><br>Map</h1>
+    <p class="subtitle">A reference for what goes into a website — and what AI tends to leave out.</p>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="container">
+    <p>Experienced designers know what makes a website feel <em>real</em> — the favicon, the 404 page, the empty states, the hover transitions. People building with AI for the first time often don't, because nobody told them those ingredients exist. AI generates the obvious layer competently and skips the rest.</p>
+    <p>This is a reference for everything that should be on the table when you're building, organized like a recipe so you can use what you need.</p>
+    <div class="meta-note">
+      <strong>About this site.</strong><br>
+      It was built with AI, by a non-coder, as a class project on managing AI tools. The ingredients listed here are the same ones that had to be deliberately requested to make this site feel finished. Without the list, AI makes a website. With the list, AI makes a website you'd actually ship.
+    </div>
+  </div>
+</section>
+
+<main class="categories">
+  <div class="container" id="categories-container">
+    <!-- Categories injected by JS -->
+  </div>
+</main>
+
+<section class="closing">
+  <div class="container">
+    <p class="closing-quote">Treat this like a cookbook, not a checklist. Not every site needs every ingredient — a personal project doesn't need analytics, a static page doesn't need empty states.</p>
+    <p class="closing-followup">The point is that you should be choosing what to skip, not skipping by accident. Expertise is knowing what's on the table. This is the table.</p>
+  </div>
+</section>
+
+<footer class="colophon">
+  <div class="container">
+    <div class="colophon-inner">
+      <span>The Ingredient Map · MMXXVI</span>
+      <span>Click any ingredient to mark it</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const categories = [
+    {
+      name: 'Structure & Architecture',
+      description: 'The bones. The parts that determine whether someone can find what they came for.',
+      items: [
+        'A clear purpose, statable in one sentence',
+        'The single primary action you want a visitor to take',
+        'Information hierarchy — what comes first, second, last',
+        'Navigation that explains itself',
+        'Logical URL structure and page organization',
+        'A footer, even when it feels redundant'
+      ]
+    },
+    {
+      name: 'Content',
+      description: "The words. AI fills space; it doesn't always say anything.",
+      items: [
+        'A headline that actually says what the site is',
+        'A subhead that answers "why should I care"',
+        'Body copy in a consistent voice',
+        'Calls-to-action with specific verbs ("Start free trial," not "Click here")',
+        'Microcopy on buttons, forms, and empty fields',
+        "An \"about\" or context section so the site isn't anonymous"
+      ]
+    },
+    {
+      name: 'Visual Design',
+      description: 'The look. Most AI-built sites fail here in subtle ways.',
+      items: [
+        'A defined color palette: primary, secondary, neutrals, one accent',
+        'A typography system with intentional pairings and a sizing scale',
+        'Spacing and whitespace — often what makes AI sites feel "off"',
+        'Visual hierarchy guiding the eye through size, weight, and color',
+        'Consistent imagery or illustration style',
+        'A logo or wordmark, even if simple'
+      ]
+    },
+    {
+      name: 'Interaction & States',
+      description: 'The life. What a thing does when you touch it, or wait for it, or break it.',
+      items: [
+        'Hover states on everything clickable',
+        'Focus states for keyboard users',
+        'Loading states for anything that takes time',
+        "Empty states for \"before you've added anything\"",
+        'Error states that explain what went wrong',
+        'Success confirmations',
+        'Transitions that smooth, not jar'
+      ]
+    },
+    {
+      name: 'Responsive & Accessible',
+      description: "The reach. The site exists for people who aren't you on a laptop.",
+      items: [
+        'A real mobile layout, not just a squished desktop one',
+        "A tablet layout that doesn't fall in the gap",
+        'Keyboard navigation',
+        'Sufficient color contrast (WCAG AA minimum)',
+        'Alt text on images',
+        'Body text at 16px or larger'
+      ]
+    },
+    {
+      name: 'Polish',
+      description: 'The finish. The ingredients AI almost always forgets.',
+      items: [
+        'A favicon — the icon in the browser tab',
+        'A page title that reads well in tabs and search',
+        'A meta description for search and link previews',
+        "An Open Graph image for when it's shared on social",
+        "A 404 page that isn't generic",
+        'Smooth scroll behavior where it makes sense',
+        "Form validation that's helpful, not punishing"
+      ]
+    },
+    {
+      name: 'Technical Foundations',
+      description: 'The plumbing. Invisible until it breaks.',
+      items: [
+        'Fast load time',
+        'Cross-browser compatibility',
+        'Analytics, so you know if anyone visited',
+        'A privacy notice or contact mechanism if you collect anything',
+        'A real domain and stable hosting'
+      ]
+    }
+  ];
+
+  const container = document.getElementById('categories-container');
+  categories.forEach((cat, i) => {
+    const num = String(i + 1).padStart(2, '0');
+    const section = document.createElement('section');
+    section.className = 'category';
+    section.innerHTML = `
+      <div class="category-header">
+        <span class="category-number">${num}</span>
+        <h2 class="category-name">${cat.name}</h2>
+      </div>
+      <p class="category-description">${cat.description}</p>
+      <ul class="ingredients">
+        ${cat.items.map((item, j) => `
+          <li class="ingredient" data-id="${i}-${j}" tabindex="0" role="checkbox" aria-checked="false">
+            <span class="checkbox" aria-hidden="true"></span>
+            <span class="ingredient-text">${item}</span>
+          </li>
+        `).join('')}
+      </ul>
+    `;
+    container.appendChild(section);
+  });
+
+  // Persist checks across sessions
+  const STORAGE_KEY = 'ingredient-map-checked-v1';
+  let checked = new Set();
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) checked = new Set(JSON.parse(saved));
+  } catch (e) {}
+
+  function toggle(el) {
+    const id = el.dataset.id;
+    const isChecked = el.classList.toggle('checked');
+    el.setAttribute('aria-checked', isChecked);
+    if (isChecked) {
+      checked.add(id);
+    } else {
+      checked.delete(id);
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...checked]));
+    } catch (e) {}
+  }
+
+  document.querySelectorAll('.ingredient').forEach(el => {
+    if (checked.has(el.dataset.id)) {
+      el.classList.add('checked');
+      el.setAttribute('aria-checked', 'true');
+    }
+    el.addEventListener('click', () => toggle(el));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        toggle(el);
+      }
+    });
+  });
+
+  // Reading progress
+  const progress = document.getElementById('progress');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        progress.style.width = Math.min(100, (scrolled / total * 100)) + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+</script>
+
+</body>
+</html>
